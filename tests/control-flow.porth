@@ -1,0 +1,13 @@
+// -*- mode: opascal -*-
+
+// if-else
+34 35 + 70 = if 69 print else 420 print end
+34 35 + 69 = if 69 print else 420 print end
+
+"------------------------------\n" 1 1 syscall3
+
+// while
+10 while dup 0 > do
+  dup print
+  1 -
+end

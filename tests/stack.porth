@@ -1,0 +1,41 @@
+// -*- mode: opascal -*-
+
+// push int
+10 20 30 print print print
+10 print 20 print 30 print
+
+"------------------------------\n" 1 1 syscall3
+
+// push str
+"Hello, World\n" 1 1 syscall3
+
+"------------------------------\n" 1 1 syscall3
+
+// dup
+420 dup dup print print print
+69 dup print dup print print
+
+"------------------------------\n" 1 1 syscall3
+
+// 2dup
+69 420 2dup print print print print
+
+"------------------------------\n" 1 1 syscall3
+
+// swap
+69 420 swap print print
+
+"------------------------------\n" 1 1 syscall3
+
+// drop
+69 420 drop print
+
+"------------------------------\n" 1 1 syscall3
+
+// over
+69 420 over print
+
+"------------------------------\n" 1 1 syscall3
+
+// big number
+1234567890987654321 print

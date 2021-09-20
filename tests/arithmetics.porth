@@ -1,0 +1,15 @@
+// -*- mode: opascal -*-
+
+// Add
+34 35   + print
+
+"------------------------------\n" 1 1 syscall3
+
+// Subtract
+500 80  - print
+
+"------------------------------\n" 1 1 syscall3
+
+// Modulo
+5 100 mod print
+104 100 mod print
