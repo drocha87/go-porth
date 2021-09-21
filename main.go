@@ -119,7 +119,7 @@ func simulate_little_endian_linux(program Program) {
 
 	assert(OPTYPE_COUNT == 37, "Exhaustive op handling in simulate_little_endian_linux")
 
-    mem := make([]byte, STR_CAPACITY + MEM_CAPACITY)
+	mem := make([]byte, STR_CAPACITY+MEM_CAPACITY)
 
 	str_offsets := make(map[int]*int, 0)
 	str_size := 0
@@ -127,7 +127,7 @@ func simulate_little_endian_linux(program Program) {
 	ip := 0
 	l := len(program)
 	for ip < l {
-        op := program[ip]
+		op := program[ip]
 		switch op.typ {
 		case PUSH_INT:
 			assert(op.value != nil, "This could be a bug in the compilation step")
@@ -172,61 +172,61 @@ func simulate_little_endian_linux(program Program) {
 		case EQ:
 			a := stack.Pop()
 			b := stack.Pop()
-            if a == b {
-                stack.Append(1)
-            } else {
-                stack.Append(0)
-            }
+			if a == b {
+				stack.Append(1)
+			} else {
+				stack.Append(0)
+			}
 			ip += 1
 
 		case GT:
 			a := stack.Pop()
 			b := stack.Pop()
 			if b > a {
-                stack.Append(1)
-            } else {
-                stack.Append(0)
-            }
+				stack.Append(1)
+			} else {
+				stack.Append(0)
+			}
 			ip += 1
 
 		case LT:
 			a := stack.Pop()
 			b := stack.Pop()
 			if b < a {
-                stack.Append(1)
-            } else {
-                stack.Append(0)
-            }
+				stack.Append(1)
+			} else {
+				stack.Append(0)
+			}
 			ip += 1
 
 		case GE:
 			a := stack.Pop()
 			b := stack.Pop()
 			if b >= a {
-                stack.Append(1)
-            } else {
-                stack.Append(0)
-            }
+				stack.Append(1)
+			} else {
+				stack.Append(0)
+			}
 			ip += 1
 
 		case LE:
 			a := stack.Pop()
 			b := stack.Pop()
 			if b <= a {
-                stack.Append(1)
-            } else {
-                stack.Append(0)
-            }
+				stack.Append(1)
+			} else {
+				stack.Append(0)
+			}
 			ip += 1
 
 		case NE:
 			a := stack.Pop()
 			b := stack.Pop()
 			if b != a {
-                stack.Append(1)
-            } else {
-                stack.Append(0)
-            }
+				stack.Append(1)
+			} else {
+				stack.Append(0)
+			}
 			ip += 1
 
 		case SHR:
@@ -364,13 +364,13 @@ func simulate_little_endian_linux(program Program) {
 				//                 s = mem[buf:buf+count].decode('utf-8')
 				s := string(mem[buf : buf+count])
 				if fd == 1 {
-                    str, err := strconv.Unquote(`"`+ s +`"`)
-                    if err != nil {
-//                         panic(fmt.Sprintf("cannot decode escaped characters in string %s", s))
-                        fmt.Printf(s)
-                    } else {
-                        fmt.Printf(str)
-                    }
+					str, err := strconv.Unquote(`"` + s + `"`)
+					if err != nil {
+						//                         panic(fmt.Sprintf("cannot decode escaped characters in string %s", s))
+						fmt.Printf(s)
+					} else {
+						fmt.Printf(str)
+					}
 				} else if fd == 2 {
 					fmt.Fprintf(os.Stderr, "%s", s)
 				} else {
