@@ -1,6 +1,6 @@
 # Go Porth (Naive 1x1 Go translation from `porth.py sim`)
 
-** This translation is based on commit #5da80c1 **
+**This translation is based on commit 5da80c1**
 
 The idea was not to write "idiomatic Go". I tried to translate 1x1 without any fancy modification to the original code. It was a relly cool experience.
 
