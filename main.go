@@ -4,7 +4,6 @@ import (
 	"bufio"
 	"fmt"
 	"os"
-	"os/exec"
 	"strconv"
 	"strings"
 	"unicode"
@@ -121,7 +120,7 @@ func simulate_little_endian_linux(program Program) {
 
 	mem := make([]byte, STR_CAPACITY+MEM_CAPACITY)
 
-	str_offsets := make(map[int]*int, 0)
+	str_offsets := make(map[int]*int)
 	str_size := 0
 
 	ip := 0
@@ -361,15 +360,15 @@ func simulate_little_endian_linux(program Program) {
 				fd := arg1
 				buf := arg2
 				count := arg3
-				//                 s = mem[buf:buf+count].decode('utf-8')
+				// s = mem[buf:buf+count].decode('utf-8')
 				s := string(mem[buf : buf+count])
 				if fd == 1 {
 					str, err := strconv.Unquote(`"` + s + `"`)
 					if err != nil {
-						//                         panic(fmt.Sprintf("cannot decode escaped characters in string %s", s))
-						fmt.Printf(s)
+						// panic(fmt.Sprintf("cannot decode escaped characters in string %s", s))
+						fmt.Print(s)
 					} else {
-						fmt.Printf(str)
+						fmt.Print(str)
 					}
 				} else if fd == 2 {
 					fmt.Fprintf(os.Stderr, "%s", s)
@@ -395,10 +394,6 @@ func simulate_little_endian_linux(program Program) {
 			panic("unreachable")
 		}
 	}
-}
-
-func generate_nasm_linux_x86_64(program Program, out_file_path string) {
-	panic("unreachable")
 }
 
 var BUILTIN_WORDS = map[string]int{
@@ -509,7 +504,7 @@ func compile_tokens_to_program(tokens []Token) Program {
 				program[block_ip].jmp = ip + 1
 			} else {
 				loc := program[block_ip].loc
-				fmt.Println(
+				fmt.Printf(
 					"%s:%d:%d: ERROR: `end` can only close `if`, `else` or `do` blocks for now",
 					loc.path, loc.line, loc.column)
 				os.Exit(1)
@@ -530,7 +525,7 @@ func compile_tokens_to_program(tokens []Token) Program {
 
 	if len(stack) > 0 {
 		loc := program[stack.Pop()].loc
-		fmt.Println(
+		fmt.Printf(
 			"%s:%d:%d: ERROR: unclosed block",
 			loc.path, loc.line, loc.column)
 		os.Exit(1)
@@ -630,17 +625,17 @@ func compile_file_to_program(file_path string) Program {
 	return compile_tokens_to_program(lex_file(file_path))
 }
 
-func cmd_call_echoed(args []string) {
-	// TODO: has go somethings like shlex.quote?
-	fmt.Printf("[CMD] %s", strings.Join(args, " "))
-	cmd := exec.Command(args[0], args[1:]...)
-	if err := cmd.Run(); err != nil {
-		panic(err)
-	}
-}
+// func cmd_call_echoed(args []string) {
+// 	// TODO: has go somethings like shlex.quote?
+// 	fmt.Printf("[CMD] %s", strings.Join(args, " "))
+// 	cmd := exec.Command(args[0], args[1:]...)
+// 	if err := cmd.Run(); err != nil {
+// 		panic(err)
+// 	}
+// }
 
 func usage(compiler_name string) {
-	fmt.Println("Usage: %s [OPTIONS] <SUBCOMMAND> [ARGS]", compiler_name)
+	fmt.Printf("Usage: %s [OPTIONS] <SUBCOMMAND> [ARGS]\n", compiler_name)
 	fmt.Println("  OPTIONS:")
 	fmt.Println("    -debug                Enable debug mode.")
 	fmt.Println("  SUBCOMMAND:")
@@ -700,7 +695,7 @@ func main() {
 
 	default:
 		usage(compiler_name)
-		fmt.Println("[ERROR] unknown subcommand %s", subcommand)
+		fmt.Printf("[ERROR] unknown subcommand %s\n", subcommand)
 		os.Exit(1)
 	}
 }
